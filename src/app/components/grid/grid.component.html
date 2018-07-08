@@ -1,0 +1,25 @@
+<table class="table  table-striped table-hover table-sm">
+  <thead>
+    <tr>
+      <th *ngFor="let name of header" width="">{{name}}</th>
+      <th width=""></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data;let i  = index">
+      <td *ngFor="let value of toArray(item)">{{ value }}</td>
+      <td width="6%">
+        <div class="btn-group btn-group-sm d-flex dropleft">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bars"></i>
+          </button>
+          <div class="dropdown-menu" x-placement="left-start" style="position: absolute; transform: translate3d(-2px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <a class="dropdown-item" [routerLink]="[updateLink + gridIds[i]]">Editar</a>
+            <a class="dropdown-item islink" (click)="deleteIt($event, user)">Excluir</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<app-modal-confirm *ngIf="modalConfirm" [question]="modalConfirm" (answer)="sendDeleteConfirmation($event)"></app-modal-confirm>

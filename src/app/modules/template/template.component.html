@@ -1,0 +1,116 @@
+<div class="d-none d-print-block" id="printArea"></div>
+<nav class="navbar navbar-expand-sm navbar-dark sticky-top flex-md-nowrap p-0 box-shadow d-print-none">
+  <div class="nav justify-content-end w-20">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#" *ngIf="user">{{user.empresa.empresa.fantasia}}</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <ul class="nav justify-content-start w-20 responsive-mobile-subtop-bar">
+    <li class="nav-item">
+      <a class="nav-link" (click)="extendLayout()">
+        <i class="fa fa-bars fa-2x"></i>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="nav justify-content-end w-80 responsive-desktop-subtop-bar">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-bell"></i> Modulos
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" [routerLink]="['/painel/inicio']">Financeiro</a>
+        <a class="dropdown-item" [routerLink]="['/painel/inicio']">63400 - Dispacho</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-envelope"></i> Mensagens
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" [routerLink]="['/painel/inicio']">José Antônio</a>
+        <a class="dropdown-item" [routerLink]="['/painel/inicio']">Maria Mercedes</a>
+        <a class="dropdown-item" [routerLink]="['/painel/inicio']">Pedro Tavares Vilas Boas</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/painel/my-account']">
+        <i class="fa fa-user-circle"></i> Minha conta</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()">
+        <i class="fa fa-sign-out"></i> Sair</a>
+    </li>
+  </ul>
+</nav>
+<div class="container-fluid d-print-none">
+  <div class="row">
+    <nav class="left-side d-none d-md-block bg-left-menu sidebar" [ngClass]="{'bg-left-menu-educacao':moduloAtual.nome==='educacao', 'bg-left-menu-biblioteca':moduloAtual.nome==='biblioteca', 'bg-left-menu-financeiro':moduloAtual.nome==='financeiro'}"
+      id="left-side">
+      <div class="sidebar-sticky left-side">
+        <ul class="nav flex-column" *ngIf="user">
+          <li class="nav-item user-details">
+            <img id="avatarImage" alt="" (click)="browseImage()" [src]="user.image_url + '?=' + ramdom" />
+            <input type="file" hidden #fileInput (change)="changePick($event)" name="fileInput" />
+            <p>{{user.name}}</p>
+           <div *ngIf="user.login" style="display: block;">{{user.login.created_at}}</div>
+            <div *ngFor="let roles of user.roles;let count = index">{{roles.role.name}}
+              <i *ngIf="user.roles.length!==(count+1)">,</i>&nbsp;</div>
+          </li>
+          <li class="nav-item">
+            <form (submit)="findInMenu(searchInput)">
+              <div class="form-control form-control-search">
+                <div class="input-group">
+                  <input autocomplete="off" [(ngModel)]="searchInput" name="searchInput" type="text" class="form-control menu-search" placeholder="Buscar no menu"
+                    aria-label="Buscar item no menu" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button *ngIf="currentSearch.length == 0" class="btn btn-link btn-sm" type="submit">
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <button *ngIf="currentSearch.length > 0" (click)="searchClear()" class="btn btn-sm btn-link" type="button">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </li>
+        </ul>
+        <ul class="nav flex-column">
+          <li *ngIf="menus.length == 0" class="nav-item">
+            <a class="nav-link">Nenhum item encontrado!</a>
+          </li>
+          <div *ngFor="let item of menus">
+            <li *ngIf="menus.length > 0" class="nav-item ">
+              <a *ngIf="(item.link)" activeclass="active" class="nav-link" [routerLink]="[item.link]">
+                <i class="fa fa-{{item.icon}}"></i> {{item.name}}
+              </a>
+              <a *ngIf="!(item.link)" href="#" class="nav-link" data-toggle="collapse" [attr.data-target]="'#childen_' + item.id" aria-expanded="false"
+                [attr.aria-controls]="'childen_' + item.id">
+                <i class="fa fa-{{item.icon}}"></i> {{item.name}}
+                <i class="fa fa-chevron-down float-right"></i>
+              </a>
+            </li>
+            <ul *ngIf="menus.length > 0" [id]="'childen_' + item.id" class="flex-column flex-children collapse">
+              <li *ngFor="let e of item.soons" class="nav-item ">
+                <a class="nav-link" [routerLink]="[e.link]">
+                  <i class="fa fa-{{e.icon}}"></i> {{e.name}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+    </nav>
+    <main role="main" class="ml-sm-auto right-side pt-3 px-4 outlet">
+      <main [@routerTransition]="getState(o)">
+        <router-outlet #o="outlet"></router-outlet>
+      </main>
+    </main>
+  </div>
+</div>

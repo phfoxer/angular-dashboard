@@ -1,0 +1,87 @@
+<div class="page-title" *ngIf="permission.read && !loaded">Grupo de permissões
+  <span>Grupo de ações de permissões</span>
+</div>
+<div class="card" *ngIf="permission.read && !loaded">
+  <div class="card-header">
+    <a *ngIf="permission.create" [routerLink]="['/painel/permission-type/create']" class="btn btn-primary btn-sm mr-2">
+      <i class="fa fa-plus"></i> Novo
+    </a>
+    <button *ngIf="permission.filter" type="button" class="btn btn-sm btn-primary mr-2" data-toggle="modal" data-target="#permissionTypeFilterModal">
+      <i class="fa fa-search"></i> Filtros
+    </button>
+    <button *ngIf="permission.print" class="btn btn-sm btn-primary" (click)="printIt('permissionTypePrintIt')">
+      <i class="fa fa-print"></i> Imprimir
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-pagination *ngIf="PermissionTypeList" (page)="paginate($event)" [data]="pagination"></app-pagination>
+      </div>
+    </div>
+    <div class="table-responsive" id="permissionTypePrintIt">
+      <table class="table table-striped table-hover table-sm ">
+        <thead>
+          <tr>
+            <th width="">Nome</th>
+            <th width="">Descrição</th>
+            <th width="6%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let permissionType of PermissionTypeList;let i  = index">
+            <td>{{permissionType.name}}</td>
+            <td>{{permissionType.description}}</td>
+            <td>
+              <div *ngIf="permission.update || permission.delete" class="btn-group btn-group-sm d-flex dropleft">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bars"></i>
+                </button>
+                <div class="dropdown-menu" x-placement="left-start" style="position: absolute; transform: translate3d(-2px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  <a *ngIf="permission.update" class="dropdown-item" [routerLink]="['/painel/permission-type/update/' + permissionType.id]">Editar</a>
+                  <a *ngIf="permission.delete" class="dropdown-item islink" (click)="deleteIt($event, permissionType)">Excluir</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Components do grid -->
+<div *ngIf="permission.create">
+  <app-loader [load]="loaded"></app-loader>
+  <app-modal-confirm *ngIf="modalConfirm.show" [question]="modalConfirm" (answer)="confirmDelete($event)"></app-modal-confirm>
+</div>
+<!-- Controle de acesso -->
+<app-deny-access *ngIf="!permission.read"></app-deny-access>
+<!-- Filtros -->
+<div class="modal fade" id="permissionTypeFilterModal" tabindex="-1" role="dialog" aria-labelledby="permissionTypeFilterModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="permissionTypeFilterModalLabel">Filtros</h5>
+        <a class="close-modal" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form action="" class="form row">
+          <div class="form-group col-12">
+            <label for="" class="required">Pefil</label>
+            <input [(ngModel)]="filter.name" name="name" type="text" class="form-control">
+          </div>
+          <div class="form-group col-12">
+            <label for="">Descrição</label>
+            <input [(ngModel)]="filter.description" name="description" type="text" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button (click)="clearFilters()" type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Limpar filtros</button>
+        <button (click)="setFilters()" type="button" class="btn btn-primary btn-sm">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>

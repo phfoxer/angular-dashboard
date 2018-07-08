@@ -1,0 +1,68 @@
+<div class="page-title" *ngIf="permission.read && !loaded">
+  Menu
+  <span>Itens do menu</span>
+</div>
+<form *ngIf="permission.create && !loaded" (submit)="onSubmit($event)" [formGroup]="menu" [ngClass]="{'needs-validation': !menu.valid,'needs-validation was-validated': menu.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-header"></div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group">
+            <label class="required" for="">Nome</label>
+            <input formControlName="name" name="name" required type="text" class="form-control" placeholder="Nome" />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required" for="">Posição</label>
+            <input formControlName="position" name="position" required type="number" class="form-control" placeholder="Posição" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label for="">Target</label>
+            <select formControlName="target" name="target" class="form-control">
+              <option [value]="''">Selecione</option>
+              <option value="_self">Self</option>
+              <option value="_blank">Blank</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label for="">Url</label>
+            <input formControlName="link" name="link" type="text" class="form-control" placeholder="Url" />
+          </div>
+        </div>
+
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label for="">Menu pai</label>
+            <select formControlName="relation" name="relation" class="form-control">
+              <option [value]="''">Selecione</option>
+              <option *ngFor="let menu of MenuList" [value]="menu.id">{{menu.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label for="">Icon</label>
+            <input formControlName="icon" name="icon" type="text" class="form-control" placeholder="Icone" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!menu.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="menu.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/painel/menu/list']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader [load]="loaded"></app-loader>

@@ -1,0 +1,81 @@
+@import '~app/colors.theme';
+@keyframes placeHolderShimmer {
+  0%{ background-position: -468px 0; }
+  100%{ background-position: 468px 0; }
+}
+.card-header {
+  background-color: transparent !important;
+  height: 56px;
+  position: relative;
+}
+.card {
+  overflow: hidden;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: placeHolderShimmer;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  position: relative;
+}
+
+.cardh1, .cardh2, .cardh3, .cardh4,.cardh5, .cardb1, .cardb2  {
+  position: absolute;
+}
+.cardb1 {
+  width: 20px;
+  height: 100%;
+}
+.cardb2  {
+  width: 100%;
+  height: 20px;
+  top:0;
+}
+.cardh1, .cardh2, .cardb1 {
+  top: 0;
+  left: 0;
+}
+.cardh1 {
+  width: 20px;
+  height: 55px;
+}
+.cardh2  {
+  width: 100%;
+  height: 12px;
+}
+.cardh3  {
+  width: 100%;
+  height: 12px;
+  bottom: 0;
+}
+.cardh4  {
+  width: 8px;
+  height: 12px;
+  height: 55px;
+  left: 0;
+  top: 0px;
+  margin-left: 87px;
+}
+.cardh5 {
+  width: 100%;
+  height: 12px;
+  height: 55px;
+  left: 0;
+  top: 0px;
+  margin-left: 168px;
+}
+
+.card-header * {
+  background-color: #fff !important;
+}
+.card-body {
+  overflow: hidden;
+  position: relative;
+  height: 150px;
+}
+.card-body * {
+  background-color:#fff;
+  overflow: hidden;
+}

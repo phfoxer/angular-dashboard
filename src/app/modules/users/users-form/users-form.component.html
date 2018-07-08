@@ -1,0 +1,53 @@
+<div class="page-title" *ngIf="permission.create && !loaded">Usuários
+  <span>Usuários do sistema</span>
+</div>
+<form *ngIf="permission.create && !loaded" (submit)="onSubmit($event)" [formGroup]="users" [ngClass]="{'needs-validation': !users.valid,'needs-validation was-validated': users.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-header"></div>
+    <div class="card-body row">
+      <div class="col-12">
+        <div class="form-group">
+          <label class="required">Nome</label>
+          <input formControlName="name" name="name" required type="text" class="form-control" placeholder="Nome" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label class="required">Email</label>
+          <input formControlName="email" name="email" required type="text" class="form-control" placeholder="Email" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label class="required">Perfis</label>
+          <select formControlName="role" name="role" required type="text" class="form-control">
+            <option *ngFor="let r of roles" [value]="r.id" [selected]="(r.id===users.value.role)">{{r.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-6" *ngIf="!users.value.id">
+        <div class="form-group">
+          <label class="required">Senha</label>
+          <input formControlName="password" name="password" type="password" class="form-control" placeholder="Senha" />
+        </div>
+      </div>
+      <div class="col-6" *ngIf="!users.value.id">
+        <div class="form-group">
+          <label class="required">Repetir senha</label>
+          <input formControlName="rpassword" name="rpassword" type="password" class="form-control" placeholder="Repetir senha" />
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!users.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="users.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/painel/users/list']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader [load]="loaded"></app-loader>
+<!-- Controle de acesso -->
+<app-deny-access *ngIf="!permission.create"></app-deny-access>

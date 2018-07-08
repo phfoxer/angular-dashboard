@@ -1,0 +1,31 @@
+<div class="page-title" *ngIf="permission.create && !loaded">Ações do permissões
+  <span>Indica quais ações podem ser executadas</span>
+</div>
+<form *ngIf="permission.create" (submit)="onSubmit($event)" [formGroup]="permissionAction" [ngClass]="{'needs-validation': !permissionAction.valid,'needs-validation was-validated': permissionAction.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-body row">
+      <div class="col-12">
+        <div class="form-group">
+          <label class="required">Nome</label>
+          <input formControlName="description" name="description" required type="text" class="form-control" placeholder="Nome" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label class="required">Ação</label>
+          <input formControlName="name" name="name" required type="text" class="form-control" placeholder="Ação" />
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!permissionAction.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="permissionAction.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/painel/permission-action/list']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader *ngIf="!permission.create" [load]="loaded"></app-loader>
+<app-deny-access *ngIf="!permission.create"></app-deny-access>

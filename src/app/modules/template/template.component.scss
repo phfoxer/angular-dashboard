@@ -1,0 +1,213 @@
+@import '~app/colors.theme';
+.feather {
+width: 16px;
+height: 16px;
+vertical-align: text-bottom;
+}
+/*
+* Sidebar
+*/
+.sidebar {
+position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+z-index: 100; /* Behind the navbar */
+padding: 0;
+box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+.sidebar-sticky {
+position: -webkit-sticky;
+position: sticky;
+top: 48px;
+height: calc(100vh - 48px);
+padding-top: 0;
+margin-top: 0px;
+overflow: hidden;
+}
+.sidebar .nav-link {
+color: #333;
+}
+.sidebar .nav-link .feather {
+margin-right: 4px;
+color: #999;
+}
+.nav-link {
+padding: 0.75rem 1rem !important;
+}
+a.nav-link, .sidebar a.nav-link {
+color: $top_link;
+cursor: pointer;
+}
+a.nav-link:hover, .sidebar a.nav-link:hover {
+color: $top_link_hover;
+-webkit-box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.09);
+-moz-box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.09);
+box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.09);
+background-color: #0000000a;
+}
+a.nav-link.active, .sidebar a.nav-link.active {
+color: $top_link_hover;
+}
+.sidebar-heading {
+text-transform: uppercase;
+}
+/*
+* Navbar636363
+*/
+.navbar-brand {
+padding-top: 0;
+padding-bottom: 0;
+padding-left: .75rem;
+background-color: $top_background;
+color:$top_logo_color !important;
+text-align: left;
+}
+.navbar-brand:hover {
+color:$top_logo_color !important;
+}
+.navbar .form-control {
+padding: .75rem 1rem;
+border-width: 0;
+border-radius: 0;
+}
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+.sidebar-sticky {
+position: fixed;
+}
+.sticky-top {
+border: 0px ;
+height: 45px;
+background-color: $top_background;
+border-bottom: 1px solid $top_border;
+box-shadow: -2px 5px 8px -8px rgba(0,0,0,0.41);
+}
+.left-side {
+width:18% !important;
+overflow: initial;
+}
+.right-side {
+width:82%;
+}
+.sidebar-sticky {
+position: fixed;
+}
+ul.flex-children {
+background-color:  #00000080;
+box-shadow: inset 0 0 15px #00000080;
+padding-left: 0px;
+}
+ul.flex-children li:hover {
+background-color: #ffffff0f;
+-webkit-transition: background-color 500ms linear;
+-ms-transition: background-color 500ms linear;
+transition: background-color 500ms linear;
+}
+ul.flex-children > li {
+display: block;
+width: 100%;
+}
+ul.flex-children > li > a.nav-link > i {
+margin: 0 0.5rem 0 0;
+color: #ffffffa3 !important
+}
+ul.flex-children > li:hover > a.nav-link > i {
+margin: 0 0.5rem 0 0;
+color:  #fff;
+}
+ul.flex-children > li > a.nav-link {
+color:#fefefe;
+}
+ul.flex-children > li > a.nav-link:hover {
+color:#fff !important;
+}
+.childen-header {
+display:none;
+}
+li.bg-left-menu:hover {
+background-color: #0000002e !important;
+-webkit-transition: background-color 500ms linear;
+-ms-transition: background-color 500ms linear;
+transition: background-color 500ms linear;
+}
+.bg-left-menu {
+background-color: $menu_left;
+color:#fff;
+}
+.bg-left-menu * a {
+    color:#fff !important;
+}
+.bg-left-menu.bg-left-menu-educacao {
+    background-color: rgb(18, 16, 95) !important;
+}
+.bg-left-menu.bg-left-menu-financeiro {
+    background-color: rgb(5, 139, 50) !important;
+}
+.bg-left-menu.bg-left-menu-biblioteca {
+    background-color: rgb(107, 0, 0) !important;
+}
+li.bg-left-menu > a.nav-link {
+color:$menu_left_color;
+text-shadow: 0px 1px 0px #4e4e4e;
+font-weight: 400;
+line-height: 1.5;
+}
+li.bg-left-menu > a.nav-link:hover {
+color: #fff !important
+}
+li.bg-left-menu > a.nav-link > i {
+color:#fff !important;
+margin: 0 0.5rem 0 0;
+font-size: 16px;
+}
+li.bg-left-menu > a.nav-link:hover > i {
+color: #fff !important
+}
+.outlet {
+position: relative;
+}
+.form-control {
+border-radius: 0px;
+}
+.user-details {
+color: #fff;
+padding: 10px 15px;
+border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+box-shadow: 0px 2px 0px -6px gba(0, 0, 0, 0.09);
+position: relative;
+height: 85px;
+line-height: 14px;
+margin-top: -2px;
+background-color: #00000033;
+}
+.user-details p {
+margin:0;
+}
+.user-details > div {
+font-size: 11px;
+display: inline;
+}
+.responsive-desktop-subtop-bar {
+position: absolute;
+right: 0;
+}
+#avatarImage {
+width: 64px;
+height: 64px;
+float: left;
+margin-top: 0px;
+border-radius: 2px;
+margin-right: 10px;
+box-shadow: 0px 0px 0px 2px #ffffff;
+padding: 0px;
+cursor: pointer;
+}
+.menu-search {
+border:0px;
+}
+.form-control-search {
+border-top: 3px solid #ffffff3b;
+border-bottom: 3px solid #ffffff3b;
+padding: 0px;
+}

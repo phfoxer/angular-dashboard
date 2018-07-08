@@ -1,0 +1,32 @@
+<app-loader-spinner [load]="sending"></app-loader-spinner>
+<div class="page-title" *ngIf="permission.create && !loaded">Funcionário
+  <span>Dados do funcionário</span>
+</div>
+<form *ngIf="permission.create" (submit)="onSubmit($event)" [formGroup]="funcionarios" [ngClass]="{'needs-validation': !funcionarios.valid,'needs-validation was-validated': funcionarios.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required">Início de atividade</label>
+            <input formControlName="inicio_atividade" name="inicio_atividade" required type="date" class="form-control" placeholder=""
+            />
+          </div>
+        </div>
+        <div class="col-8"></div>
+      </div>
+      <app-formulario-pessoa *ngIf="funcionarios.value.pessoa_id" [id]="funcionarios.value.pessoa_id" (pessoa)="getPessoa($event)"></app-formulario-pessoa>
+      <app-formulario-pessoa *ngIf="!funcionarios.value.pessoa_id" [id]="" (pessoa)="getPessoa($event)"></app-formulario-pessoa>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!funcionarios.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="funcionarios.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/gestao/funcionarios']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader *ngIf="!permission.create" [load]="loaded"></app-loader>
+<app-deny-access *ngIf="!permission.create"></app-deny-access>

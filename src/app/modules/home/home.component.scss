@@ -1,0 +1,5 @@
+.back img {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    height: calc(inherit - 30px);
+}

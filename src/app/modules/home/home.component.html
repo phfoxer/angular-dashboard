@@ -1,0 +1,49 @@
+<div class="page-title" *ngIf="!loaded">Meus processos
+  <span>Processos ordenados por ultima movimentação.</span>
+</div>
+<div class="card" *ngIf="!loaded">
+  <div class="card-header">
+    <button type="button" class="btn btn-sm btn-primary mr-2" data-toggle="modal" data-target="#profileFilterModal">
+      <i class="fa fa-search"></i> Filtros
+    </button>
+    <button class="btn btn-sm btn-primary" (click)="printIt('homePrintIt')">
+      <i class="fa fa-print"></i> Imprimir
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-pagination (page)="paginate($event)" [data]="pagination"></app-pagination>
+      </div>
+      <div class="col-12">
+        <div class="table-responsive" id="homePrintIt">
+          <table class="table table-striped table-hover table-sm">
+            <thead>
+              <tr>
+                <th width="">Número</th>
+                <th width="">Advogado</th>
+                <th width="">Competência</th>
+                <th width="">Parte autora</th>
+                <th width="">Parte ré</th>
+                <th width="">Polo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users;let i = index">
+                <td>{{ ((i+1) * ((i%2==0)?2 : 5) ) * 1268 }}</td>
+                <td>{{ (i%2==0)? 'Roberto Teixeira': ' Luiz Ronaldo'}}</td>
+                <td>Sérgio Moro</td>
+                <td>{{ (i%2==0)? 'Luis Silva': 'Maria Eunice'}}</td>
+                <td>INSS</td>
+                <td>{{ (i%2==0)? 'Ativo': 'Passivo'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-loader [load]="loaded"></app-loader>

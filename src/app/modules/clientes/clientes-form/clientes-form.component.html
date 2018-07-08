@@ -1,0 +1,40 @@
+<app-loader-spinner [load]="sending"></app-loader-spinner>
+<div class="page-title" *ngIf="permission.create && !loaded">Cliente
+  <span>Dados do cliente</span>
+</div>
+<form *ngIf="permission.create" (submit)="onSubmit($event)" [formGroup]="clientes" [ngClass]="{'needs-validation': !clientes.valid,'needs-validation was-validated': clientes.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-body">
+      <!-- <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="required">Responsáveis</label>
+            <ng-select [multiple]="true" [placeholder]="Selecione" [required]="true" formControlName="funcionarios" name="funcionarios"
+              [items]="responsaveis" bindLabel="pessoa.nome" bindValue="pessoa_id"></ng-select>
+          </div>
+        </div>
+      </div> -->
+
+      <app-formulario-pessoa *ngIf="clientes.value.pessoa_id" [id]="clientes.value.pessoa_id" (pessoa)="getPessoa($event)"></app-formulario-pessoa>
+      <app-formulario-pessoa *ngIf="!clientes.value.pessoa_id" [id]="" (pessoa)="getPessoa($event)"></app-formulario-pessoa>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label>Observações</label>
+            <textarea formControlName="observacao" name="observacao" id="observacao" rows="1" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!clientes.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="clientes.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/gestao/clientes']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader *ngIf="!permission.create" [load]="loaded"></app-loader>
+<app-deny-access *ngIf="!permission.create"></app-deny-access>

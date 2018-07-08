@@ -1,0 +1,21 @@
+<nav *ngIf="data && data.last_page > 1" class="navbar navbar-light bg-light justify-content-between w-100 mb-2">
+
+    <div class="navbar-brand"> Página {{data.current_page}} de {{data.last_page}}</div>
+     
+    <form class="form form-inline">
+    <div class="form-group">
+      <button (click)="paginate(data.current_page - 1)" type="button" class="btn btn-sm btn-primary btn-block">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="form-group">
+      <input name="current_page" (change)="paginate(data.current_page)" [(ngModel)]="data.current_page" pattern="[0-9]" min="1"
+        max="160" placeholder="Nº" type="number" class="text-center form-control-sm form-control" />
+    </div>
+    <div class="form-group">
+      <button (click)="paginate(data.current_page + 1)" type="button" class="btn btn-sm btn-primary btn-block">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  </form>
+</nav>

@@ -1,0 +1,17 @@
+<app-loader-spinner [load]="loaded"></app-loader-spinner>
+<div class="wrapper"></div>
+<div class="container">
+  <div class="login-container">
+    <div id="output"></div>
+    <div class="avatar">
+      <img src="assets/image/logo.png" id="logo" alt="">
+    </div>
+    <div class="form-box">
+      <form action="" method="">
+        <input name="email" [(ngModel)]="user.email" type="text" placeholder="Login" required />
+        <input id="inputPassword" [(ngModel)]="user.password" type="password" name="password" placeholder="******" required />
+        <button (click)="onSubmit()" class="btn btn-primary btn-block login" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+</div>

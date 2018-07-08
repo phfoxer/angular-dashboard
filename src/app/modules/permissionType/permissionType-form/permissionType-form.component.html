@@ -1,0 +1,42 @@
+<div class="page-title" *ngIf="permission.create && !loaded">
+  Grupo de permissões
+  <span>Grupo de ações de permissões</span>
+</div>
+<form *ngIf="permission.create" (submit)="onSubmit($event)" [formGroup]="permissionType" [ngClass]="{'needs-validation': !permissionType.valid,'needs-validation was-validated': permissionType.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="required">Nome</label>
+            <input formControlName="name" name="name" required type="text" class="form-control" placeholder="Nome" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="">Descrição</label>
+            <textarea formControlName="description" class="form-control" placeholder="Descrição" name="descricao" cols="30" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" *ngFor="let action of permissionActions">
+          <div class="form-group">
+            <label>{{action.name}}</label>
+            <input-checkbox [checked]="isChecked(action.id)" (value)="setPermission($event,action.id)"></input-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!permissionType.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="permissionType.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/painel/permission-type/list']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader *ngIf="!permission.create" [load]="loaded"></app-loader>
+<app-deny-access *ngIf="!permission.create"></app-deny-access>

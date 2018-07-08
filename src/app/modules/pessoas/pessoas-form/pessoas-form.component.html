@@ -1,0 +1,284 @@
+<div class="page-title" *ngIf="permission.create && !loaded">Pessoas
+  <span>Usuários, clientes e funcionários</span>
+</div>
+<form *ngIf="permission.create || permission.update" (submit)="onSubmit($event)" [formGroup]="pessoas" [ngClass]="{'needs-validation': !pessoas.valid,'needs-validation was-validated': pessoas.valid }"
+  novalidate class="form">
+  <div class="card">
+    <div class="card-header"></div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-8">
+          <div class="form-group">
+            <label class="required">Nome</label>
+            <input formControlName="nome" name="nome" required type="text" class="form-control" placeholder="Nome" />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required">Data Nascimento</label>
+            <input formControlName="data_nascimento" name="data_nascimento" required type="date" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label>CPF</label>
+            <input formControlName="cpf" name="cpf" type="text" class="form-control" placeholder="CPF" />
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label>RG</label>
+            <input formControlName="rg" name="rg" type="text" class="form-control" placeholder="RG" />
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <div class="form-group">
+            <label>Email</label>
+            <input formControlName="email" name="email" type="text" class="form-control" placeholder="Email" />
+          </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <div class="form-group">
+            <label class="required">Estado Civil</label>
+            <ng-select placeholder="Selecione" [required]="true" formControlName="estado_civil" name="estado_civil"
+              [items]="estadoCivil" bindLabel="nome" bindValue="chave"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <div class="form-group">
+            <label class="required">Estado</label>
+            <ng-select placeholder="Selecione" [required]="true" (change)="setCidade($event)" formControlName="estado_id" name="estado_id"
+              [items]="estados" bindLabel="nome" bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+          <div class="form-group">
+            <label class="required">Cidade</label>
+            <ng-select placeholder="Selecione" [required]="true" formControlName="cidade_id" name="cidade_id" [items]="cidades" bindLabel="nome"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <div class="form-group">
+            <label>Endereços</label>
+            <button type="button" class="btn btn-sm btn-primary btn-block" data-toggle="modal" data-target="#showPessoasAdressModal">
+              <i class="fa fa-map-marker mr-2"></i>Adicionar
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <div class="form-group">
+            <label>Telefones</label>
+            <button type="button" class="btn btn-sm btn-primary btn-block" data-toggle="modal" data-target="#showPessoasPhoneModal">
+              <i class="fa fa-phone mr-2"></i>Adicionar
+            </button>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="pessoas.value.telefones && pessoas.value.telefones.length > 0">
+          <div class="page-title">Telefones</div>
+          <table class="table table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Cod. Pais</th>
+                <th scope="col">DDD</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Descrição</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let telefone of pessoas.value.telefones">
+                <th scope="row">{{telefone.codigo_pais}}</th>
+                <td>{{telefone.ddd}}</td>
+                <td>{{telefone.telefone}}</td>
+                <td>{{telefone.descricao}}</td>
+                <td class="text-right">
+                  <button type="button" (click)="removeTelefone(telefone)" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-12" *ngIf="pessoas.value.enderecos && pessoas.value.enderecos.length > 0">
+          <div class="page-title">Endereços</div>
+          <table class="table table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Estado</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">CEP</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Rua</th>
+                <th scope="col">Complemento</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let endereco of pessoas.value.enderecos">
+                <td>{{endereco.estado}}</td>
+                <td>{{endereco.cidade}}</td>
+                <td>{{endereco.endereco}}</td>
+                <td>{{endereco.cep}}</td>
+                <td>{{endereco.bairro}}</td>
+                <td>{{endereco.rua}}</td>
+                <td>{{endereco.complemento}}</td>
+
+                <td class="text-right">
+                  <button type="button" (click)="removeTelefone(endereco)" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="form-group">
+        <button type="submit" *ngIf="!pessoas.value.id" class="btn btn-success btn-sm mr-1">Salvar e continuar</button>
+        <button type="submit" *ngIf="pessoas.value.id" class="btn btn-primary btn-sm mr-1">Salvar e continuar</button>
+        <a [routerLink]="['/painel/pessoas/list']" class="btn btn-sm btn-link">Voltar</a>
+      </div>
+    </div>
+  </div>
+</form>
+<app-loader *ngIf="!permission.create" [load]="loaded"></app-loader>
+<app-deny-access *ngIf="!permission.create && !permission.update"></app-deny-access>
+
+<!-- Modal -->
+<div class="modal fade" id="showPessoasPhoneModal" tabindex="-1" role="dialog" aria-labelledby="showPessoasPhoneModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showPessoasPhoneModalLabel">
+          <span *ngIf="!pessoas.value.nome">Adicionar telefones</span>
+          <span *ngIf="pessoas.value.nome">{{pessoas.value.nome}}</span>
+        </h5>
+        <a class="close-modal" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form (submit)="onSubmitTelefones($event)" [formGroup]="telefones" [ngClass]="{'needs-validation': !telefones.valid,'needs-validation was-validated': telefones.valid }"
+          novalidate class="form">
+          <div class="row">
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <label>Cod. Pais</label>
+                <input formControlName="codigo_pais" name="codigo_pais" [value]="" type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <label class="required">DDD</label>
+                <input formControlName="ddd" name="ddd" required type="number" class="form-control" placeholder="" />
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label class="required">Telefone</label>
+                <input formControlName="telefone" name="telefone" required type="text" class="form-control" placeholder="" />
+              </div>
+
+              <div class="form-group">
+                <label>Descrição</label>
+                <textarea formControlName="descricao" name="descricao" rows="2" class="form-control" placeholder=""></textarea>
+              </div>
+              <button type="submit" class="btn btn-sm btn-success">
+                <i class="fa fa-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="showPessoasAdressModal" tabindex="-1" role="dialog" aria-labelledby="showPessoasAdressModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showPessoasAdressModalLabel">
+          <span *ngIf="!pessoas.value.nome">Adicionar endereços</span>
+          <span *ngIf="pessoas.value.nome">{{pessoas.value.nome}}</span>
+        </h5>
+        <a class="close-modal" data-dismiss="modal" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <form (submit)="onSubmitEnderecos($event)" [formGroup]="enderecos" [ngClass]="{'needs-validation': !enderecos.valid,'needs-validation was-validated': enderecos.valid }"
+          novalidate class="form">
+          <div class="row">
+            <div class="col-md-8 col-xs-12">
+              <div class="form-group">
+                <label class="required">Cidade</label>
+                <input formControlName="cidade" name="cidade" [value]="" type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label class="required">Estado</label>
+                <input formControlName="estado" name="estado" required type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="form-group">
+                <label class="required">Endereço</label>
+                <input formControlName="endereco" name="endereco" required type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label>CEP</label>
+                <input formControlName="cep" name="cep" type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="required">Bairro</label>
+                <input formControlName="bairro" name="bairro" required type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="required">Rua</label>
+                <input formControlName="rua" name="rua" required type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="required">Complemento</label>
+                <input formControlName="complemento" name="complemento" type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-success">
+                  <i class="fa fa-plus mr-2"></i>Adicionar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

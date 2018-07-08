@@ -1,0 +1,30 @@
+<div class="input-group">
+    <input *ngIf="items" (click)="openOptions()" [(ngModel)]="value" name="item" readonly type="text" class="form-control" placeholder="Selecione" />
+    <div class="input-group-prepend" *ngIf="value">
+        <button (click)="clear()" class="btn btn-primary" type="button"><i class="fa fa-times"></i></button>
+    </div>
+</div>
+
+<div *ngIf="items" class="modal fade" [id]="'selectModal'+hash" tabindex="-1" role="dialog" aria-labelledby="selectModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectModalTitle" *ngIf="label">{{label}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" [(ngModel)]="search" (input)="find()" class="form-control" autofocus placeholder="Pesquisar" />
+                <div class="list-group list-group-flush" id="list-tab" role="tablist">
+                    <a *ngFor="let item of items" (click)="selectedEmit(item)" class="list-group-item list-group-item-action" id="list-profile-list"
+                        data-toggle="list" href="#list-item" role="tab" aria-controls="profile" [ngClass]="{'active':(active==item.id)}">
+                        {{item.name}}
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+interface IModulo {
+    nome: string;
+}
